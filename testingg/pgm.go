@@ -44,9 +44,9 @@ func Connect() {
 		}
 		switch choice {
 		case 1:
-			CreateTask(db, "test", "50")
+			CreateTask(db, "fest", "50")
 		case 2:
-			UpdateTask(db)
+			UpdateTask(db, "fest", "70", "eats")
 		case 3:
 			GetTask(db)
 		case 4:
@@ -62,16 +62,7 @@ func CreateTask(db *sql.DB, task string, due string) {
 	_, e := db.Exec(insert)
 	CheckError(e)
 }
-func UpdateTask(db *sql.DB) {
-	var task string
-	var newtask string
-	var due string
-	fmt.Println("Enter the Task you want to update: ")
-	fmt.Scan(&task)
-	fmt.Println("Enter the New Task: ")
-	fmt.Scan(&newtask)
-	fmt.Println("Enter the new Due Date")
-	fmt.Scan(&due)
+func UpdateTask(db *sql.DB, task string, due string, newtask string) {
 	update := fmt.Sprintf("UPDATE %s SET TASK = '%s', DUE = '%s' WHERE TASK = '%s';", tablename, newtask, due, task)
 	_, e := db.Exec(update)
 	CheckError(e)
@@ -104,7 +95,7 @@ func DeleteTask(db *sql.DB) {
 
 func CheckError(err error) {
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
 	}
 
 }
